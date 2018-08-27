@@ -1,5 +1,6 @@
 package com.mny.contactdemo;
 
+import android.accounts.AccountManager;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
 import android.content.ContentResolver;
@@ -24,6 +25,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.widget.Toast;
 
 import static android.provider.ContactsContract.Directory.ACCOUNT_NAME;
 import static android.provider.SyncStateContract.Columns.ACCOUNT_TYPE;
@@ -285,7 +287,8 @@ public class ContactsManager {
         while (i < list.size()) {
             rawContactId = ops.size();
             ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
-                    .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, ACCOUNT_NAME)  // 此处传入null添加一个raw_contact空数据
+                    .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, AccountManager.KEY_ACCOUNT_NAME)
+                    .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, AccountManager.KEY_ACCOUNT_TYPE)  // 此处传入null添加一个raw_contact空数据
                     .build());
             ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
                     .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)  // RAW_CONTACT_ID是第一个事务添加得到的，因此这里传入0，applyBatch返回的ContentProviderResult[]数组中第一项
@@ -394,6 +397,7 @@ public class ContactsManager {
             try {
                 results = mContext.getContentResolver()
                         .applyBatch(ContactsContract.AUTHORITY, ops);
+                Toast.makeText(mContext,"Successful",Toast.LENGTH_SHORT).show();
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (OperationApplicationException e) {

@@ -14,11 +14,11 @@
 
         <Button
             android:id="@+id/btn"
-            android:layout_width="wrap_content"
+            android:layout_width="139dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="getContactUri"
+            android:text="获取联系人快"
             android:textAllCaps="false" />
 
         <Button
@@ -27,12 +27,23 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="Low Load"
+            android:text="获取联系人慢"
 
             android:textAllCaps="false" />
+        <Button
+            android:id="@+id/btn_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="去写入"
 
+            android:textAllCaps="false" />
     </LinearLayout>
-
+    <EditText
+        android:id="@+id/et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
